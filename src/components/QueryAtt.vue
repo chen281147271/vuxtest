@@ -167,12 +167,10 @@
           this.value7=[start, end]
         },
         handleSizeChange(val) {
-         // console.log(`每页 ${val} 条`);
           this.pageSize=val
           this.getATTList()
         },
         handleCurrentChange(val) {
-       //  console.log(`当前页: ${val}`);
           this.currentPage=val
           this.getATTList()
         },
