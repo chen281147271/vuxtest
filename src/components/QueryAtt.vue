@@ -26,12 +26,36 @@
           range-separator="至"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
+          @change="query"
           :picker-options="pickerOptions2">
         </el-date-picker>
       <el-button type="primary" size="small" v-on:click="query" icon="search">查 询</el-button>
+      <el-button type="primary" size="small" v-on:click="exportExcel" icon="search">导 出</el-button>
     </el-header>
     <el-main>
       <template>
+        <el-table
+          :hidden="true"
+          :data="Print_tableData"
+          stripe
+          id="out-table"
+          style="width: 100%">
+          <el-table-column
+            prop="USERID"
+            label="ID"
+            width="180">
+          </el-table-column>
+          <el-table-column
+            prop="NAME"
+            label="姓名"
+            width="180">
+          </el-table-column>
+          <el-table-column
+            prop="CHECKTIME"
+            :formatter="dateFormat"
+            label="日期">
+          </el-table-column>
+        </el-table>
         <el-table
           :data="tableData"
           stripe
@@ -68,12 +92,15 @@
 
 <script>
   import moment from 'moment'
+  import FileSaver from 'file-saver'
+  import XLSX from 'xlsx'
     export default {
         name: "QueryAtt",
       data() {
         return {
           restaurants: [],
           tableData: [],
+          Print_tableData:[],
           pickerOptions2: {
             shortcuts: [{
               text: '最近一周',
@@ -109,35 +136,66 @@
         }
       },
       methods: {
-          getATTList(){
-            let that=this
-            let sTime=that.value7[0]
-            let eTime=that.value7[1]
-            let currentPage=that.currentPage
-            let pageSize=that.pageSize
-            sTime=moment(sTime).format('YYYY-MM-DD')
-            eTime=moment(eTime).format('YYYY-MM-DD')
-            this.$http({
-              method:'get',
-              url:'http://172.16.75.166:81/api/ATT/GetDrugInfo',
-              params:{
-                Key:that.SKey,
-                sTime:sTime,
-                eTime:eTime,
-                PageSize:pageSize,
-                CurPage:currentPage
-              }
-            }).then(res=>{
-              that.tableData=res.data.list
-              that.tbCount=res.data.tbCount
-              this.saveData()
-            })
-          },
+        exportExcel () {
+          /* generate workbook object from table */
+          var wb = XLSX.utils.table_to_book(document.querySelector('#out-table'))
+          /* get binary string as output */
+          var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
+          try {
+            FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), 'sheetjs.xlsx')
+          } catch (e) { if (typeof console !== 'undefined') console.log(e, wbout) }
+          return wbout
+        },
+        getATTList(){
+          this.getATTListPrint()
+          let that=this
+          let sTime=that.value7[0]
+          let eTime=that.value7[1]
+          let currentPage=that.currentPage
+          let pageSize=that.pageSize
+          sTime=moment(sTime).format('YYYY-MM-DD')
+          eTime=moment(eTime).format('YYYY-MM-DD')
+          this.$http({
+            method:'get',
+            url:'http://192.168.120.9:8090/ATT_API/api/ATT/GetDrugInfo',
+            params:{
+              Key:that.SKey,
+              sTime:sTime,
+              eTime:eTime,
+              PageSize:pageSize,
+              CurPage:currentPage
+            }
+          }).then(res=>{
+            that.tableData=res.data.list
+            that.tbCount=res.data.tbCount
+            this.saveData()
+          })
+        },
+        getATTListPrint(){
+          let that=this
+          let sTime=that.value7[0]
+          let eTime=that.value7[1]
+          sTime=moment(sTime).format('YYYY-MM-DD')
+          eTime=moment(eTime).format('YYYY-MM-DD')
+          this.$http({
+            method:'get',
+            url:'http://192.168.120.9:8090/ATT_API/api/ATT/GetDrugInfo',
+            params:{
+              Key:that.SKey,
+              sTime:sTime,
+              eTime:eTime,
+              PageSize:9999999,
+              CurPage:0
+            }
+          }).then(res=>{
+            that.Print_tableData=res.data.list
+          })
+        },
         getNameList(){
           let that=this;
           this.$http({
             method:'get',
-            url:'http://172.16.75.166:81/api/ATT/GetNameInfo'
+            url:'http://192.168.120.9:8090/ATT_API/api/ATT/GetNameInfo'
           }).then(res=>{
             that.restaurants=res.data.list
           })
@@ -163,7 +221,7 @@
         iniTime(){
           const end = new Date()
           const start = new Date()
-          start.setTime(start.getTime() - 3600 * 1000 * 24 * 1)
+          start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
           this.value7=[start, end]
         },
         handleSizeChange(val) {
@@ -175,6 +233,7 @@
           this.getATTList()
         },
         query(){
+
           this.currentPage=1;
           this.getATTList()
         },
@@ -210,6 +269,7 @@
         if(this.value7==''){
           this.getNameList()
           this.iniTime()
+          this.query()
         }
       }
     }

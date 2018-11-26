@@ -58,7 +58,7 @@
                 Key:this.$route.query.id
               }
             }).then(res=>{
-              console.log( res.data)
+             // console.log( res.data)
               that.medList=res.data.DrugLocInfo
               that.strTitle=res.data.DrugLocInfo[0].med_name_ch
             })

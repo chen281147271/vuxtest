@@ -3,16 +3,21 @@
     <el-header>考勤查询</el-header>
     <el-container>
       <el-aside width="200px">
-        <el-menu default-active="QueryAtt" theme="dark" v-bind:router="true">
+        <el-menu default-active="$route.path"
+                 theme="dark"
+                 v-bind:router="true"
+                 @select="handleSelect">
           <el-menu-item index="/">考勤查询</el-menu-item>
-          <el-menu-item index="HelloWorld">其他</el-menu-item>
+          <el-menu-item index="ValidateATT">出勤记录统计</el-menu-item>
+          <el-menu-item index="userinfo">出勤人员维护</el-menu-item>
+
         </el-menu>
       </el-aside>
       <el-container>
         <el-main>
           <router-view></router-view>
         </el-main>
-        <el-footer>chenkailai@rsszy.com</el-footer>
+        <el-footer>rsszy.com</el-footer>
       </el-container>
     </el-container>
   </el-container>

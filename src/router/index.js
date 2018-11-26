@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import QueryAtt from '../components/QueryAtt'
-import HelloWorld from'../components/test'
+import ValidateATT from'../components/test'
 import HelloWorldVux from'../components/HelloFromVux'
+import userinfo from'../components/userinfo'
  let routes= [
    {
      path: '/',
@@ -15,10 +16,15 @@ import HelloWorldVux from'../components/HelloFromVux'
        name: 'QueryAtt'
      },
      {
-       path: '/HelloWorld',
-       component: HelloWorld,
-       name: 'HelloWorld'
-     }
+       path: '/ValidateATT',
+       component: ValidateATT,
+       name: 'ValidateATT'
+     },
+       {
+         path: '/userinfo',
+         component: userinfo,
+         name: 'userinfo'
+       }
    ]
 
    }
