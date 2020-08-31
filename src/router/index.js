@@ -4,6 +4,7 @@ import QueryAtt from '../components/QueryAtt'
 import ValidateATT from'../components/test'
 import HelloWorldVux from'../components/HelloFromVux'
 import userinfo from'../components/userinfo'
+import YGInfo from'../components/YGInfo'
  let routes= [
    {
      path: '/',
@@ -20,11 +21,16 @@ import userinfo from'../components/userinfo'
        component: ValidateATT,
        name: 'ValidateATT'
      },
-       {
-         path: '/userinfo',
-         component: userinfo,
-         name: 'userinfo'
-       }
+     {
+       path: '/userinfo',
+       component: userinfo,
+       name: 'userinfo'
+     },
+     {
+       path: '/YGInfo',
+       component: YGInfo,
+       name: 'YGInfo'
+     }
    ]
 
    }

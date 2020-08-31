@@ -3,13 +3,11 @@
     <el-header>考勤查询</el-header>
     <el-container>
       <el-aside width="200px">
-        <el-menu default-active="$route.path"
-                 theme="dark"
-                 v-bind:router="true"
-                 @select="handleSelect">
+        <el-menu default-active="QueryAtt" theme="dark" v-bind:router="true">
           <el-menu-item index="/">考勤查询</el-menu-item>
           <el-menu-item index="ValidateATT">出勤记录统计</el-menu-item>
           <el-menu-item index="userinfo">出勤人员维护</el-menu-item>
+          <el-menu-item index="YGInfo">员工信息</el-menu-item>
 
         </el-menu>
       </el-aside>
@@ -39,7 +37,7 @@ export default {
   watch:{
     '$route' (to, from) {
       // 对路由变化作出响应...
-      //console.log(to);
+      console.log(to);
     }
   },
   computed:{

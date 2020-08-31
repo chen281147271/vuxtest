@@ -19,6 +19,10 @@ const store = new Vuex.Store({
     value7s: [],
     tableData2: [],
     bAuth:false,
+    tableDataYG: [],
+    tbCountYG:0,
+    currentPageYG:1,
+    pageSizeYG:15,
   },
   mutations:{
     newAuth(state,msg){
@@ -59,7 +63,19 @@ const store = new Vuex.Store({
     },
     newPageSize(state,msg){
       state.pageSize=msg
-    }
+    },
+    newTbCountYG(state,msg){
+      state.tbCountYG=msg
+    },
+    newCurrentPageYG(state,msg){
+      state.currentPageYG=msg
+    },
+    newPageSizeYG(state,msg){
+      state.pageSizeYG=msg
+    },
+    newTableDataYG(state,msg){
+      state.tableDataYG=msg
+    },
 
   }
 })

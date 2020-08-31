@@ -157,7 +157,7 @@
           eTime=moment(eTime).format('YYYY-MM-DD')
           this.$http({
             method:'get',
-            url:'http://192.168.120.9:8090/ATT_API/api/ATT/GetDrugInfo',
+            url:'http://113.98.232.85:8080/ATTAPI/api/ATT/GetDrugInfo',
             params:{
               Key:that.SKey,
               sTime:sTime,
@@ -179,7 +179,7 @@
           eTime=moment(eTime).format('YYYY-MM-DD')
           this.$http({
             method:'get',
-            url:'http://192.168.120.9:8090/ATT_API/api/ATT/GetDrugInfo',
+            url:'http://113.98.232.85:8080/ATTAPI/api/ATT/GetDrugInfo',
             params:{
               Key:that.SKey,
               sTime:sTime,
@@ -195,7 +195,7 @@
           let that=this;
           this.$http({
             method:'get',
-            url:'http://192.168.120.9:8090/ATT_API/api/ATT/GetNameInfo'
+            url:'http://113.98.232.85:8080/ATTAPI/api/ATT/GetNameInfo'
           }).then(res=>{
             that.restaurants=res.data.list
           })

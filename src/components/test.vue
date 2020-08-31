@@ -373,7 +373,7 @@
           this.loading=true
           this.$http({
             method: 'post',
-            url:'http://192.168.120.9:8090/ATT_API/api/ATT/ValidateATT',
+            url:'http://113.98.232.85:8080/ATTAPI/api/ATT/ValidateATT',
             //url: 'http://localhost:56517/api/WxApplication/InsApplicationInfo',
             data: {
               workday:this.d_arr,
